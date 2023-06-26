@@ -2,11 +2,31 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const events_controllers_1 = require("../controllers/events.controllers");
+const express_validator_1 = require("express-validator");
+const verifyError_1 = require("../middlewares/verifyError");
+const validateID_1 = require("../middlewares/validateID");
 const router = (0, express_1.Router)();
 router.get('/', events_controllers_1.getEvents);
-router.post('/', events_controllers_1.createEvent);
-router.get('/:id', events_controllers_1.getEvent);
-router.put('/:id', events_controllers_1.updateEvent);
-router.delete('/:id', events_controllers_1.deleteEvent);
+router.post('/', [
+    (0, express_validator_1.check)('start', 'The start date is required').isDate(),
+    (0, express_validator_1.check)('end', 'The end date is required').isDate(),
+    (0, express_validator_1.check)('title', 'The title is required').notEmpty(),
+    verifyError_1.verifyError
+], events_controllers_1.createEvent);
+router.get('/:id', [
+    (0, express_validator_1.check)('id').custom(validateID_1.validateIdEvent),
+    (0, express_validator_1.check)('id', 'The id is invalid').isMongoId(),
+    verifyError_1.verifyError
+], events_controllers_1.getEvent);
+router.put('/:id', [
+    (0, express_validator_1.check)('id').custom(validateID_1.validateIdEvent),
+    (0, express_validator_1.check)('id', 'The id is invalid').isMongoId(),
+    verifyError_1.verifyError
+], events_controllers_1.updateEvent);
+router.delete('/:id', [
+    (0, express_validator_1.check)('id').custom(validateID_1.validateIdEvent),
+    (0, express_validator_1.check)('id', 'The id is invalid').isMongoId(),
+    verifyError_1.verifyError
+], events_controllers_1.deleteEvent);
 exports.default = router;
 //# sourceMappingURL=events.routes.js.map
