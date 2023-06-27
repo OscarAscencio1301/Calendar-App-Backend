@@ -13,7 +13,7 @@ const createEvent = async (req: Request, resp: Response) => {
             end,
             title,
             desc,
-            user: user._id
+            user: user?._id
         }
 
 
@@ -29,6 +29,9 @@ const createEvent = async (req: Request, resp: Response) => {
 
 
     } catch (error) {
+
+        console.log(error)
+
         resp.status(500).json({
             ok: false,
             msg: 'Hable con el Administrador'

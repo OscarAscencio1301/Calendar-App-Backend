@@ -16,7 +16,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const events_routes_1 = __importDefault(require("../routes/events.routes"));
 const users_routes_1 = __importDefault(require("../routes/users.routes"));
-const users_routes_2 = __importDefault(require("../routes/users.routes"));
+const login_routes_1 = __importDefault(require("../routes/login.routes"));
 const config_1 = require("../database/config");
 class Princpal {
     constructor() {
@@ -34,7 +34,7 @@ class Princpal {
     routes() {
         this.app.use('/events', events_routes_1.default);
         this.app.use('/users', users_routes_1.default);
-        this.app.use('/auth', users_routes_2.default);
+        this.app.use('/auth', login_routes_1.default);
     }
     database() {
         return __awaiter(this, void 0, void 0, function* () {

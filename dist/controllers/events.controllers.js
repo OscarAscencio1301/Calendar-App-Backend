@@ -23,7 +23,7 @@ const createEvent = (req, resp) => __awaiter(void 0, void 0, void 0, function* (
             end,
             title,
             desc,
-            user: user._id
+            user: user === null || user === void 0 ? void 0 : user._id
         };
         const event = new Events_1.default(payload);
         yield event.save();
@@ -34,6 +34,7 @@ const createEvent = (req, resp) => __awaiter(void 0, void 0, void 0, function* (
         });
     }
     catch (error) {
+        console.log(error);
         resp.status(500).json({
             ok: false,
             msg: 'Hable con el Administrador'

@@ -3,13 +3,17 @@ import { createEvent, deleteEvent, getEvent, getEvents, updateEvent } from "../c
 import { check } from "express-validator";
 import { verifyError } from "../middlewares/verifyError";
 import { validateIdEvent } from "../middlewares/validateID";
+import verifyJWT from "../jwt/verifyJWT";
 
 const router = Router()
 
 
-router.get('/', getEvents);
+router.get('/', [
+    verifyJWT,
+], getEvents);
 
 router.post('/', [
+    verifyJWT,
     check('start', 'The start date is required').isDate(),
     check('end', 'The end date is required').isDate(),
     check('title', 'The title is required').notEmpty(),
@@ -17,18 +21,21 @@ router.post('/', [
 ], createEvent);
 
 router.get('/:id', [
+    verifyJWT,
     check('id').custom(validateIdEvent),
     check('id', 'The id is invalid').isMongoId(),
     verifyError
 ], getEvent);
 
 router.put('/:id', [
+    verifyJWT,
     check('id').custom(validateIdEvent),
     check('id', 'The id is invalid').isMongoId(),
     verifyError
 ], updateEvent);
 
 router.delete('/:id', [
+    verifyJWT,
     check('id').custom(validateIdEvent),
     check('id', 'The id is invalid').isMongoId(),
     verifyError

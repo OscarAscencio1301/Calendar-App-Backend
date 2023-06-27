@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import eventRoutes from '../routes/events.routes'
 import usersRoutes from '../routes/users.routes'
-import loginRoutes from '../routes/users.routes'
+import loginRoutes from '../routes/login.routes'
 import { connectDB } from '../database/config'
 
 class Princpal {
