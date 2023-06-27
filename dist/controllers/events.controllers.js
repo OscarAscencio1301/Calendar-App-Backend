@@ -8,13 +8,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateEvent = exports.deleteEvent = exports.getEvents = exports.getEvent = exports.createEvent = void 0;
+const Events_1 = __importDefault(require("../models/Events"));
 const createEvent = (req, resp) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const { start, end, title, desc, status } = req.body;
+        const user = req.user;
+        const payload = {
+            start,
+            end,
+            title,
+            desc,
+            user: user._id
+        };
+        const event = new Events_1.default(payload);
+        yield event.save();
         resp.status(200).json({
             ok: true,
-            msg: 'ok'
+            msg: 'ok',
+            event
         });
     }
     catch (error) {
@@ -27,9 +43,11 @@ const createEvent = (req, resp) => __awaiter(void 0, void 0, void 0, function* (
 exports.createEvent = createEvent;
 const getEvents = (req, resp) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const event = yield Events_1.default.find({ status: true });
         resp.status(200).json({
             ok: true,
-            msg: 'ok'
+            msg: 'ok',
+            event
         });
     }
     catch (error) {
@@ -42,9 +60,12 @@ const getEvents = (req, resp) => __awaiter(void 0, void 0, void 0, function* () 
 exports.getEvents = getEvents;
 const getEvent = (req, resp) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const { id } = req.params;
+        const event = yield Events_1.default.findById(id);
         resp.status(200).json({
             ok: true,
-            msg: 'ok'
+            msg: 'ok',
+            event
         });
     }
     catch (error) {
@@ -57,9 +78,13 @@ const getEvent = (req, resp) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getEvent = getEvent;
 const updateEvent = (req, resp) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const { start, end, title, desc, status } = req.body;
+        const { id } = req.params;
+        const event = yield Events_1.default.findByIdAndUpdate(id, { start, end, title, desc }, { new: true });
         resp.status(200).json({
             ok: true,
-            msg: 'ok'
+            msg: 'ok',
+            event
         });
     }
     catch (error) {
@@ -72,9 +97,12 @@ const updateEvent = (req, resp) => __awaiter(void 0, void 0, void 0, function* (
 exports.updateEvent = updateEvent;
 const deleteEvent = (req, resp) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const { id } = req.params;
+        const event = yield Events_1.default.findByIdAndUpdate(id, { status: false }, { new: true });
         resp.status(200).json({
             ok: true,
-            msg: 'ok'
+            msg: 'ok',
+            event
         });
     }
     catch (error) {
