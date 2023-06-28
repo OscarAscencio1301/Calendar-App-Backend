@@ -36,7 +36,7 @@ class Princpal {
         this.app.use('/users', users_routes_1.default);
         this.app.use('/auth', login_routes_1.default);
         this.app.get('*', (req, resp) => {
-            resp.sendFile(__dirname + '/public/index.html');
+            resp.sendFile('index.html', { root: 'public' });
         });
     }
     database() {

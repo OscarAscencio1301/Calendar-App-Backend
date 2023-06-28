@@ -28,7 +28,7 @@ class Princpal {
         this.app.use('/users', usersRoutes)
         this.app.use('/auth', loginRoutes)
         this.app.get('*', (req, resp) => {
-            resp.sendFile(__dirname + '/public/index.html')
+            resp.sendFile('index.html', {root: 'public'})
         } )
     }
 
