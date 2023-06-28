@@ -44,11 +44,11 @@ const createEvent = (req, resp) => __awaiter(void 0, void 0, void 0, function* (
 exports.createEvent = createEvent;
 const getEvents = (req, resp) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const event = yield Events_1.default.find({ status: true });
+        const events = yield Events_1.default.find({ status: true });
         resp.status(200).json({
             ok: true,
             msg: 'ok',
-            event
+            events
         });
     }
     catch (error) {

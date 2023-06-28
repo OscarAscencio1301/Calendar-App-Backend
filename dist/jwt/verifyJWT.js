@@ -25,17 +25,18 @@ const verifyJWT = (req, resp, next) => __awaiter(void 0, void 0, void 0, functio
         const { id } = jsonwebtoken_1.default.verify(token, String(process.env.SECRET));
         const user = yield Users_1.default.findById(id);
         if (!user) {
-            resp.status(400).json({
+            return resp.status(400).json({
                 ok: false,
                 msg: "Incorrect User"
             });
         }
-        else if (user.status) {
+        else if (!user.status) {
             return resp.json({
                 msg: 'Delete User'
             });
         }
         req.user = user;
+        next();
     }
     catch (error) {
         resp.status(500).json({

@@ -10,12 +10,13 @@ const router = Router()
 
 router.get('/', [
     verifyJWT,
+    verifyError
 ], getEvents);
 
 router.post('/', [
     verifyJWT,
-    check('start', 'The start date is required').isDate(),
-    check('end', 'The end date is required').isDate(),
+    check('start', 'The start date is required').notEmpty(),
+    check('end', 'The end date is required').notEmpty(),
     check('title', 'The title is required').notEmpty(),
     verifyError
 ], createEvent);

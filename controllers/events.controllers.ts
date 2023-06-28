@@ -42,12 +42,12 @@ const createEvent = async (req: Request, resp: Response) => {
 const getEvents = async (req: Request, resp: Response) => {
     try {
 
-        const event = await Events.find({ status: true })
+        const events = await Events.find({ status: true })
 
         resp.status(200).json({
             ok: true,
             msg: 'ok',
-            event
+            events
         })
     } catch (error) {
         resp.status(500).json({

@@ -18,18 +18,20 @@ const verifyJWT = async (req: Request, resp: Response, next: NextFunction) => {
         const user = await Users.findById(id)
 
         if (!user) {
-            resp.status(400).json({
+            return resp.status(400).json({
                 ok: false,
                 msg: "Incorrect User"
             })
 
-        } else if (user.status) {
+        } else if (!user.status) {
             return resp.json({
                 msg: 'Delete User'
             })
         }
 
         req.user = user
+
+        next()
 
 
 

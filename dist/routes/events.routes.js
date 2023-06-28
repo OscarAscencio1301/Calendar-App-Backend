@@ -12,11 +12,12 @@ const verifyJWT_1 = __importDefault(require("../jwt/verifyJWT"));
 const router = (0, express_1.Router)();
 router.get('/', [
     verifyJWT_1.default,
+    verifyError_1.verifyError
 ], events_controllers_1.getEvents);
 router.post('/', [
     verifyJWT_1.default,
-    (0, express_validator_1.check)('start', 'The start date is required').isDate(),
-    (0, express_validator_1.check)('end', 'The end date is required').isDate(),
+    (0, express_validator_1.check)('start', 'The start date is required').notEmpty(),
+    (0, express_validator_1.check)('end', 'The end date is required').notEmpty(),
     (0, express_validator_1.check)('title', 'The title is required').notEmpty(),
     verifyError_1.verifyError
 ], events_controllers_1.createEvent);
